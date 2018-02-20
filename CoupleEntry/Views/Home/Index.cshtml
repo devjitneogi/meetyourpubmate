@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Welcome";
+}
+
+@section Integration{
+    <div class="container-fluid">
+        <div class="col-sm-3">
+            <div style="background-color:whitesmoke;padding:20px;">
+                <h2>Fill your details:</h2>
+                <label for="uname">Name:</label><br />
+                <input type="text" id="uname" placeholder="Enter your name..." class="input-sm" />
+                <br />
+                <label for="age">Age:</label><br />
+                <input type="number" min="15" max="100" id="age" value="24" class="input-sm" />
+                <br />
+                <label for="gender">Gender:</label>
+                <select class="form-control" id="gender">
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+                <br />
+                <button id="findPeopleBtn" class="btn btn-primary btn-lg">Find people near me! &raquo;</button>
+
+            </div><br />
+            <div style="background-color:whitesmoke;padding:20px;">
+                <h2>Filter by:</h2>
+                <label for="distanceFilter">Max distance(in kms):</label><br />
+                <input type="number" min="0" max="100" id="distanceFilter" value="5" class="input-sm" /><br />
+                <label for="genderFilter">Gender:</label>
+                <select class="form-control input-sm" id="genderFilter">
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option selected>Both</option>
+                </select><br />
+                <button id="findPeopleBtnFilter" class="btn btn-primary btn-lg">Filter! &raquo;</button>
+            </div>
+        </div>
+        <div class="jumbotron col-sm-7">
+            <h1>Welcome!</h1>
+            <p class="lead" id="yourAddress"></p>
+            <div id="map"></div>
+            <div id="error-div"></div>
+        </div>
+
+        <div class="container col-sm-2">
+            @*<h3>Nearby People:</h3>*@
+            <div class="panel-group" id="nearbyPeoplesList">
+            </div>
+        </div>
+    </div>
+}
+
+@section ScriptsHome {
+    <script>
+
+    function GetOtherUsers() {
+
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GetOtherUsers", "Home")",
+            cache: false,
+            complete: function (data) {
+                AddUser();
+                if (data.responseJSON) {
+                    FindNearbyPeople(data.responseJSON);
+                }
+            }
+        });
+
+    }
+
+    function AddUser() {
+        var uname = $("#uname")[0].value;
+        var age = $("#age")[0].value;
+        var gender = $("#gender")[0].value;
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("AddUser", "Home")",
+            data: { uname: uname, latitude: myLat, longitude: myLong, age: age, gender: gender },
+            cache: false,
+            complete: function (data) {
+            }
+        });
+
+    }
+
+    </script>
+}
