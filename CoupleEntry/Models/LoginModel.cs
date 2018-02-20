@@ -7,5 +7,11 @@ namespace CoupleEntry.Models
 {
     public class LoginModel
     {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public int Age { get; set; }
+        public string Gender { get; set; }
+        public string ImageUrl { get; set; }
+        public string Token { get; set; }
     }
 }

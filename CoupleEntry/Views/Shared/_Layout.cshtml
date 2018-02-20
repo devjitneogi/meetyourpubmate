@@ -45,16 +45,20 @@
         @if (IsSectionDefined("Integration"))
         {
             @RenderSection("Integration");
-        }
-        @if (IsSectionDefined("ScriptsHome"))
+        }  
+        @if (IsSectionDefined("AddUser"))
         {
-            @RenderSection("ScriptsHome", true);
+            @RenderSection("AddUser", true);
+        }
+        @if (IsSectionDefined("Scripts"))
+        {
+            @RenderSection("Scripts", true);
         }
     </div>
 
 
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+  @*  @RenderSection("scripts", required: false)*@
 
 </body>
 </html>

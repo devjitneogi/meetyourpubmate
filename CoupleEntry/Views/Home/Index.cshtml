@@ -50,9 +50,14 @@
     </div>
 }
 
-@section ScriptsHome {
+@section Scripts {
     <script>
-
+        $(function () {
+            debugger;
+            var mask = $('#mask');
+            mask.hide();
+            getLocation();
+        });
     function GetOtherUsers() {
 
         $.ajax({
@@ -83,6 +88,6 @@
         });
 
     }
-
+        
     </script>
 }

@@ -23,22 +23,31 @@ namespace UxWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string email, string name)
+        public ActionResult Login(LoginModel loginModel)
         {
 
-            //if (loginModel == null)
-            //{
-            //    ModelState.AddModelError("", "A username and password is required.");
-            ////    LoginModel passBackLoginModel = CreateLoginModel();
-            //    // Remove password.
-            //  //  passBackLoginModel.Password = null;
-            //    return View();
-            //}
+            if (loginModel != null)
+            {
+                //if loginModel.Email in DB
+                //update values of token in DB and cookies
+               // return Json(new { result = "Redirect", url = Url.Action("Index", "Home") }, JsonRequestBehavior.AllowGet);
 
-            return null;
+
+                //else (not in DB)
+                //Add details to DB and cookies
+                return Json(new { result = "Add" ,url = Url.Action("AddUser", "Login",new {name=loginModel.Name,email=loginModel.Email })}, JsonRequestBehavior.AllowGet);
+
+            }
+
+            return Json(new { result = "Error" }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult AddUser(string name,string email)
+        {
+            LoginModel model = new LoginModel() { Name=name,Email=email};
+            return View(model);
+        }
 
-       
     }
 }

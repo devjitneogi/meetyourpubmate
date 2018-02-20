@@ -126,9 +126,7 @@ function showError(error) {
 
 $(function () {
 
-    var mask = $('#mask');
-    mask.hide();
-    getLocation();
+  
     $("#findPeopleBtn,#findPeopleBtnFilter").on("click", function () {
         if ($("#uname")[0].value != "" && $("#age")[0].value != "") {
             mask.show();

@@ -10,35 +10,46 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            debugger;
-
-            $("#mask").hide();
+              $("#mask").hide();
         });
 
 
         function onSignIn(googleUser) {
             debugger;
             var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            var id = profile.getId(); // Do not send to your backend! Use an ID token instead.
+            var name = profile.getName();
+            var imageUrl = profile.getImageUrl();
+            var emailId = profile.getEmail(); // This is null if the 'email' scope is not present.
             var id_token = googleUser.getAuthResponse().id_token;
+            var loginModel = { Name: name, Email: emailId, ImageUrl: imageUrl, Token:id_token };
             $.ajax({
-
                 url: '@Url.Action("Login", "Login")',
-
                 type: 'POST',
                 data: {
-                    email: profile.getEmail(),
-                    name: profile.getName(),                
+                    loginModel: loginModel
                 },
                 success: function (response) {
                     debugger;
-                    window.location.href = '@Url.Action("Index", "Home")';
+                   
+                    if (response.result == 'Error') {
+                        //show error
+                    }
+                    else if (response.result == 'Redirect') {
+                        //redirecting to main page from here for the time being.
+                        window.location = response.url;
+                    }
+                    else if (response.result == "Add")
+                    {
+                        @*var url = '@Url.Action("AddUser", "Login", new { email = "__mail__",name="__name__"})';
+                        url = url.replace('__mail__', emailId);
+                        url = url.replace('__name__', name);*@
+                        window.location.href = response.url;
+                    }
+                    
                 },
 
-                //dataType: "jsonp"
+
 
             });
         }
