@@ -13,7 +13,7 @@
               $("#mask").hide();
         });
        
-
+       
 
         function onSignIn(googleUser) {
             debugger;
@@ -26,6 +26,12 @@
             var expiryTime = googleUser.getAuthResponse().expires_in;
             debugger;
             gapi.auth2.init();
+            gapi.load('auth2', function () {
+                debugger;
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut();
+                console.log('Logged out.');
+            });
             var loginModel = { Name: name, Email: emailId, ImageUrl: imageUrl, Token: id_token, Expiry: expiryTime };
             $.ajax({
                 url: '@Url.Action("Login", "Login")',
@@ -57,6 +63,6 @@
 
 @section Login {
     <h2>Login</h2>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <div class="g-signin2" data-onSuccess="onSignIn"></div>
     <a id="signOut" href="#" onclick="signOut();">Sign out</a>
 }

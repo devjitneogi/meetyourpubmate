@@ -32,6 +32,7 @@ namespace CoupleEntry.Controllers
 
         public JsonResult GetOtherUsers()
         {
+            //fetch other users
             return Json(nearbyUsers, JsonRequestBehavior.AllowGet);
         }
     }

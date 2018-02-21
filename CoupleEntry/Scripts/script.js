@@ -1,4 +1,5 @@
-﻿var usersOnline;
+﻿
+var usersOnline;
 var map;
 var lastMarker;
 var myLat, myLong;
@@ -125,8 +126,12 @@ function showError(error) {
 }
 
 $(function () {
+   // debugger;
+    gapi.load('auth2', function () {
+      //  debugger;
+        gapi.auth2.init();
+    });
 
-  
     $("#findPeopleBtn,#findPeopleBtnFilter").on("click", function () {
         if ($("#uname")[0].value != "" && $("#age")[0].value != "") {
             mask.show();
