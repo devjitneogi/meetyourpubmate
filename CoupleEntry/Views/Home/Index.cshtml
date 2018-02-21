@@ -6,19 +6,7 @@
     <div class="container-fluid">
         <div class="col-sm-3">
             <div style="background-color:whitesmoke;padding:20px;">
-                <h2>Fill your details:</h2>
-                <label for="uname">Name:</label><br />
-                <input type="text" id="uname" placeholder="Enter your name..." class="input-sm" />
-                <br />
-                <label for="age">Age:</label><br />
-                <input type="number" min="15" max="100" id="age" value="24" class="input-sm" />
-                <br />
-                <label for="gender">Gender:</label>
-                <select class="form-control" id="gender">
-                    <option>Male</option>
-                    <option>Female</option>
-                </select>
-                <br />
+            
                 <button id="findPeopleBtn" class="btn btn-primary btn-lg">Find people near me! &raquo;</button>
 
             </div><br />
@@ -53,7 +41,7 @@
 @section Scripts {
     <script>
         $(function () {
-            debugger;
+           // debugger;
             var mask = $('#mask');
             mask.hide();
             getLocation();

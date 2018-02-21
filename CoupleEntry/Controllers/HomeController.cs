@@ -12,6 +12,7 @@ namespace CoupleEntry.Controllers
     public class HomeController : Controller
     {
         public static HashSet<NearbyUser> nearbyUsers = new HashSet<NearbyUser>();
+        [UxWebAuthorize]
         public ActionResult Index()
         {
             nearbyUsers.RemoveWhere(r => (DateTime.Now - r.lastSeen).TotalMinutes > 5);

@@ -149,7 +149,7 @@ $(function () {
         ShowOnMap(user.attr("lat"), user.attr("lon"), user.attr("label"), user.attr("address"));
     });
     $('#signOut').on('click', function signOut() {
-        debugger;
+        //debugger;
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(function () {
             console.log('User signed out.');
