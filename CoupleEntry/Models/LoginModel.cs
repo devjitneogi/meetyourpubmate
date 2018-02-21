@@ -13,5 +13,6 @@ namespace CoupleEntry.Models
         public string Gender { get; set; }
         public string ImageUrl { get; set; }
         public string Token { get; set; }
+        public int Expiry { get; set; }
     }
 }

@@ -7,7 +7,7 @@
 @section AddUser {
 <h2>AddUser</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddUserToDB", "Login",FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     

@@ -1,5 +1,7 @@
 ﻿using CoupleEntry;
 using CoupleEntry.Models;
+using System;
+using System.Web;
 using System.Web.Mvc;
 using static CoupleEntry.SessionService;
 
@@ -22,8 +24,12 @@ namespace UxWeb.Controllers
 
             if (loginModel != null)
             {
+                HttpCookie Cookie = new HttpCookie("Authorization", loginModel.Token);
+                Cookie.Expires = DateTime.Now.AddSeconds(loginModel.Expiry);
+                Response.Cookies.Add(Cookie);
+
                 //if loginModel.Email in DB
-                //update values of token in DB and cookies
+                //update values of token in DB                
                 // return Json(new { result = "Redirect", url = Url.Action("Index", "Home") }, JsonRequestBehavior.AllowGet);
 
 
@@ -45,5 +51,10 @@ namespace UxWeb.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult AddUserToDB(LoginModel model)
+        {
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

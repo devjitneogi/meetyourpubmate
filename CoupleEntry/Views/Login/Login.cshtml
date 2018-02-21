@@ -22,7 +22,8 @@
             var imageUrl = profile.getImageUrl();
             var emailId = profile.getEmail(); // This is null if the 'email' scope is not present.
             var id_token = googleUser.getAuthResponse().id_token;
-            var loginModel = { Name: name, Email: emailId, ImageUrl: imageUrl, Token:id_token };
+            var expiryTime = googleUser.getAuthResponse().expires_in;
+            var loginModel = { Name: name, Email: emailId, ImageUrl: imageUrl, Token: id_token, Expiry: expiryTime };
             $.ajax({
                 url: '@Url.Action("Login", "Login")',
                 type: 'POST',
