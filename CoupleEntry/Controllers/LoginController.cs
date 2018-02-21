@@ -32,7 +32,8 @@ namespace UxWeb.Controllers
                 bool exists = DALayer.IsEmailPresentInDB(loginModel.Email);
                  
                 if(exists)
-                { //update values of token in DB
+                {
+                    DALayer.UpsertTokenValue(loginModel.Token, loginModel.Email);
                     return Json(new { result = "Redirect", url = Url.Action("Index", "Home") }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -56,6 +57,7 @@ namespace UxWeb.Controllers
         [HttpPost]
         public ActionResult AddUserToDB(LoginModel model)
         {
+            //Update user table with values from model
             return RedirectToAction("Index", "Home");
         }
     }

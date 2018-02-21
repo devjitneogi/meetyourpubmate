@@ -31,5 +31,23 @@ namespace CoupleEntry
             return Convert.ToBoolean(returnParameter.Value);
         }
 
+        public static void UpsertTokenValue(string tokenId, string emailId)
+        {
+            string procName = "UpsertTokenValue";
+            IDbCommand command = new SqlCommand(procName);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter() { ParameterName = "CookieId", SqlDbType = SqlDbType.NVarChar, Value = tokenId });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "EmailId", SqlDbType = SqlDbType.NVarChar, Value = emailId });
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                command.Connection = connection;
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+        }
+
     }
 }
