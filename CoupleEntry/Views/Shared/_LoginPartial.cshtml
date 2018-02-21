@@ -1,0 +1,43 @@
+﻿@using CoupleEntry.Models
+@{
+    HttpCookieCollection cookies = HttpContext.Current.Request.Cookies;
+    HttpCookie authCookie = cookies.Get("UserMail");
+    string mailId = null;
+    if (authCookie != null)
+    {
+        mailId = SessionService.GetProperty(SessionService.SessionVariableNames.Email_Id) as string;
+    }
+}
+@if (mailId != null)
+{
+    //using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    // {
+    <div class="navbar-right">
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hello " + mailId + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="#" onclick="signOut();">Log off</a></li>
+        </ul>
+    </div>
+    // }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
+<script>
+    function signOut() {
+        debugger;
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+    }
+
+</script>

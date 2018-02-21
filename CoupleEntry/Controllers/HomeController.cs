@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static CoupleEntry.SessionService;
 
 namespace CoupleEntry.Controllers
 {
@@ -15,10 +16,12 @@ namespace CoupleEntry.Controllers
         [UxWebAuthorize]
         public ActionResult Index()
         {
+            if (Request.Cookies["UserMail"] != null)
+                SetProperty(SessionVariableNames.Email_Id, Request.Cookies["UserMail"].Value);
             nearbyUsers.RemoveWhere(r => (DateTime.Now - r.lastSeen).TotalMinutes > 5);
             return View();
         }
-           
+
         public bool AddUser(string uname, int age, string gender, string latitude, string longitude)
         {
             if (nearbyUsers.Where(x => x.uname == uname).Count() == 0)

@@ -13,8 +13,7 @@ namespace UxWeb.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            // LoginModel loginModel = CreateLoginModel();
-            Session.Abandon();
+            RemoveCookiesAndSession();
             return View();
         }
 
@@ -25,8 +24,8 @@ namespace UxWeb.Controllers
             if (loginModel != null)
             {
                 SetCookies(loginModel);
-                SetProperty(SessionVariableNames.Login_Model, loginModel, loginModel.Email);
-
+                SetProperty(SessionVariableNames.Login_Model, loginModel);
+                SetProperty(SessionVariableNames.Email_Id, loginModel.Email);
                 bool exists = DALayer.IsEmailPresentInDB(loginModel.Email);
                 if (exists)
                 {
@@ -44,10 +43,9 @@ namespace UxWeb.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddUser(string email)
+        public ActionResult AddUserInformation()
         {
-
-            LoginModel model = GetProperty(SessionVariableNames.Login_Model, email) as LoginModel;
+            LoginModel model = GetProperty(SessionVariableNames.Login_Model) as LoginModel;
             return View(model);
         }
 
@@ -59,7 +57,7 @@ namespace UxWeb.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private void  SetCookies(LoginModel loginModel)
+        private void SetCookies(LoginModel loginModel)
         {
             HttpCookie AuthCookie = new HttpCookie("Authorization", loginModel.Token);
             AuthCookie.Expires = DateTime.Now.AddSeconds(loginModel.Expiry);
@@ -69,6 +67,22 @@ namespace UxWeb.Controllers
             EmailCookie.Expires = DateTime.Now.AddSeconds(loginModel.Expiry);
             Response.Cookies.Add(EmailCookie);
 
+        }
+        private void RemoveCookiesAndSession()
+        {
+            if (Request.Cookies["Authorization"] != null)
+            {
+                var c = new HttpCookie("Authorization");
+                c.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(c);
+            }
+            if (Request.Cookies["UserMail"] != null)
+            {
+                var c = new HttpCookie("UserMail");
+                c.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(c);
+            }
+            Session.Clear();
         }
     }
 }

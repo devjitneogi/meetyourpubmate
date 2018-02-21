@@ -24,7 +24,8 @@ namespace CoupleEntry.AuthenticationProvider
 
             HttpCookieCollection cookies = httpContext.Request.Cookies;
             HttpCookie authCookie = cookies.Get("Authorization");
-            if (authCookie != null)
+            HttpCookie userMailCookie = cookies.Get("UserMail");
+            if (authCookie != null && userMailCookie != null)
             {
                 //validation of cookie from google to be done
                 return true;

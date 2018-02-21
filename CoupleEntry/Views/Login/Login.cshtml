@@ -12,6 +12,7 @@
         $(document).ready(function () {
               $("#mask").hide();
         });
+       
 
 
         function onSignIn(googleUser) {
@@ -23,6 +24,8 @@
             var emailId = profile.getEmail(); // This is null if the 'email' scope is not present.
             var id_token = googleUser.getAuthResponse().id_token;
             var expiryTime = googleUser.getAuthResponse().expires_in;
+            debugger;
+            gapi.auth2.init();
             var loginModel = { Name: name, Email: emailId, ImageUrl: imageUrl, Token: id_token, Expiry: expiryTime };
             $.ajax({
                 url: '@Url.Action("Login", "Login")',
@@ -37,20 +40,14 @@
                         //show error
                     }
                     else if (response.result == 'Redirect') {
-                        //redirecting to main page from here for the time being.
                         window.location = response.url;
                     }
                     else if (response.result == "Add")
                     {
-                        @*var url = '@Url.Action("AddUser", "Login", new { email = "__mail__",name="__name__"})';
-                        url = url.replace('__mail__', emailId);
-                        url = url.replace('__name__', name);*@
-                        window.location.href = response.url+"?email="+emailId;
+                         window.location.href = response.url;
                     }
                     
                 },
-
-
 
             });
         }

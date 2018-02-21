@@ -6,57 +6,27 @@ using System.Web;
 
 namespace CoupleEntry
 {
-    public class UserSessionVariables
-    {
-        public LoginModel loginModel;
-
-    }
+   
     public class SessionService
     {
         public class SessionVariableNames
         {
             public static string Login_Model { get { return "loginModel"; } }
+            public static string Email_Id { get { return "emailId"; } }
 
         }
-        private static void setPropertyValue(ref UserSessionVariables obj, string propertyName, object propertyValue)
+      
+   
+        public static object GetProperty(string propertyName)
         {
-            switch (propertyName)
-            {
-                case "loginModel":
-                    obj.loginModel = propertyValue as LoginModel;
-                    break;
-                default:
-                    break;
-            }
-        }
-        private static object findPropertyValue(UserSessionVariables obj, string propertyName)
-        {
-            switch (propertyName)
-            {
-                case "loginModel":
-                    return obj.loginModel;
-                default:
-                    return null;
-            }
-        }
-        public static object GetProperty(string propertyName, string mailId)
-        {
-            UserSessionVariables obj = HttpContext.Current.Session[mailId] as UserSessionVariables;
-            if (obj != null)
-                return findPropertyValue(obj, propertyName);
-            else
-                return null;
+            return HttpContext.Current.Session[propertyName];
+          
         }
 
-        public static void SetProperty(string propertyName, object propertyValue, string mailId)
+        public static void SetProperty(string propertyName, object propertyValue)
         {
-            UserSessionVariables obj = HttpContext.Current.Session[mailId] as UserSessionVariables;
-            if (obj == null)
-            {
-                obj = new UserSessionVariables();
-            }
-            setPropertyValue(ref obj, propertyName, propertyValue);
-            HttpContext.Current.Session[mailId] = obj;
+            var obj = HttpContext.Current.Session[propertyName];
+            HttpContext.Current.Session[propertyName] = propertyValue;
         }
     }
 }
