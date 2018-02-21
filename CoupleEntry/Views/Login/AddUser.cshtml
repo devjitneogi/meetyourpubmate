@@ -47,7 +47,11 @@
                 @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <div>
+            @Html.HiddenFor(model=>model.Token)
+            @Html.HiddenFor(model => model.ImageUrl)
+            @Html.HiddenFor(model=>model.Email)
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />

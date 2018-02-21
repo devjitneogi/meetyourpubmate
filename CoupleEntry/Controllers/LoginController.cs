@@ -1,19 +1,13 @@
-﻿using CoupleEntry.Models;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Net;
-using System.Web;
+﻿using CoupleEntry;
+using CoupleEntry.Models;
 using System.Web.Mvc;
-
+using static CoupleEntry.SessionService;
 
 namespace UxWeb.Controllers
 {
     public class LoginController : Controller
     {
-     
+
         [HttpGet]
         public ActionResult Login()
         {
@@ -30,12 +24,13 @@ namespace UxWeb.Controllers
             {
                 //if loginModel.Email in DB
                 //update values of token in DB and cookies
-               // return Json(new { result = "Redirect", url = Url.Action("Index", "Home") }, JsonRequestBehavior.AllowGet);
+                // return Json(new { result = "Redirect", url = Url.Action("Index", "Home") }, JsonRequestBehavior.AllowGet);
 
 
                 //else (not in DB)
-                //Add details to DB and cookies
-                return Json(new { result = "Add" ,url = Url.Action("AddUser", "Login",new {name=loginModel.Name,email=loginModel.Email })}, JsonRequestBehavior.AllowGet);
+                //Add details cookies
+                SetProperty(SessionVariableNames.Login_Model, loginModel, loginModel.Email);
+                return Json(new { result = "Add", url = Url.Action("AddUser", "Login", JsonRequestBehavior.AllowGet) });
 
             }
 
@@ -43,9 +38,10 @@ namespace UxWeb.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddUser(string name,string email)
+        public ActionResult AddUser(string email)
         {
-            LoginModel model = new LoginModel() { Name=name,Email=email};
+
+            LoginModel model = GetProperty(SessionVariableNames.Login_Model, email) as LoginModel;
             return View(model);
         }
 

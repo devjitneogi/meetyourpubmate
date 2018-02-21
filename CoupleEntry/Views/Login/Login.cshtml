@@ -44,7 +44,7 @@
                         @*var url = '@Url.Action("AddUser", "Login", new { email = "__mail__",name="__name__"})';
                         url = url.replace('__mail__', emailId);
                         url = url.replace('__name__', name);*@
-                        window.location.href = response.url;
+                        window.location.href = response.url+"?email="+emailId;
                     }
                     
                 },
