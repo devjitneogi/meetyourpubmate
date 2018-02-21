@@ -22,18 +22,11 @@ namespace CoupleEntry.Controllers
             return View();
         }
 
-        public bool AddUser(string uname, int age, string gender, string latitude, string longitude)
+        public bool AddUserPositionToDB(string latitude, string longitude)
         {
-            if (nearbyUsers.Where(x => x.uname == uname).Count() == 0)
-                nearbyUsers.Add(new NearbyUser() { uname = uname, age = age, gender = gender, latitude = latitude, longitude = longitude, lastSeen = DateTime.Now });
-            else
-            {
-                nearbyUsers.FirstOrDefault(s => s.uname == uname).lastSeen = DateTime.Now;
-                nearbyUsers.FirstOrDefault(s => s.uname == uname).latitude = latitude;
-                nearbyUsers.FirstOrDefault(s => s.uname == uname).longitude = longitude;
-                nearbyUsers.FirstOrDefault(s => s.uname == uname).age = age;
-                nearbyUsers.FirstOrDefault(s => s.uname == uname).gender = gender;
-            }
+            string emailId = GetProperty(SessionVariableNames.Email_Id) as string;
+            //upsert to DB Position table, date time you can pass from here or in SP itself
+           
             return true;
         }
 

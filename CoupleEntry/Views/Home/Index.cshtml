@@ -68,8 +68,8 @@
         var gender = $("#gender")[0].value;
         $.ajax({
             type: "GET",
-            url: "@Url.Action("AddUser", "Home")",
-            data: { uname: uname, latitude: myLat, longitude: myLong, age: age, gender: gender },
+            url: "@Url.Action("AddUserPositionToDB", "Home")",
+            data: {latitude: myLat, longitude: myLong },
             cache: false,
             complete: function (data) {
             }
