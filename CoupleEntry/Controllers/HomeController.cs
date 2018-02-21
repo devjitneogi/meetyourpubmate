@@ -17,16 +17,7 @@ namespace CoupleEntry.Controllers
             nearbyUsers.RemoveWhere(r => (DateTime.Now - r.lastSeen).TotalMinutes > 5);
             return View();
         }
-        public ActionResult GoogleLogin(string email, string name)
-        {
-            return RedirectToAction("Index", "Home");
            
-        }
-        public ActionResult Index2()
-        {
-            nearbyUsers.RemoveWhere(r => (DateTime.Now - r.lastSeen).TotalMinutes > 5);
-            return null;
-        }
         public bool AddUser(string uname, int age, string gender, string latitude, string longitude)
         {
             if (nearbyUsers.Where(x => x.uname == uname).Count() == 0)
