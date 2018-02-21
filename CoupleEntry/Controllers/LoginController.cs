@@ -27,16 +27,18 @@ namespace UxWeb.Controllers
                 HttpCookie Cookie = new HttpCookie("Authorization", loginModel.Token);
                 Cookie.Expires = DateTime.Now.AddSeconds(loginModel.Expiry);
                 Response.Cookies.Add(Cookie);
-
-                //if loginModel.Email in DB
-                //update values of token in DB                
-                // return Json(new { result = "Redirect", url = Url.Action("Index", "Home") }, JsonRequestBehavior.AllowGet);
-
-
-                //else (not in DB)
-                //Add details cookies
                 SetProperty(SessionVariableNames.Login_Model, loginModel, loginModel.Email);
-                return Json(new { result = "Add", url = Url.Action("AddUser", "Login", JsonRequestBehavior.AllowGet) });
+
+                bool exists = DALayer.IsEmailPresentInDB(loginModel.Email);
+                 
+                if(exists)
+                { //update values of token in DB
+                    return Json(new { result = "Redirect", url = Url.Action("Index", "Home") }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { result = "Add", url = Url.Action("AddUser", "Login", JsonRequestBehavior.AllowGet) });
+                }
 
             }
 
