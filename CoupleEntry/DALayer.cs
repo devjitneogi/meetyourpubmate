@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoupleEntry.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -49,5 +50,25 @@ namespace CoupleEntry
 
         }
 
+        public static void AddNewUser(string userName, int age, string emailId, string gender, string imageUrl, string name)
+        {
+            string procName = "AddNewUser";
+            IDbCommand command = new SqlCommand(procName);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter() { ParameterName = "UserName", SqlDbType = SqlDbType.NVarChar, Value = userName });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "Age", SqlDbType = SqlDbType.Int, Value = age });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "Gender", SqlDbType = SqlDbType.NVarChar, Value = gender });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "ImageUrl", SqlDbType = SqlDbType.NVarChar, Value = imageUrl });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "Name", SqlDbType = SqlDbType.NVarChar, Value = name });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "EmailId", SqlDbType = SqlDbType.NVarChar, Value = emailId });
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                command.Connection = connection;
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
     }
 }

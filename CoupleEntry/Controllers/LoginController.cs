@@ -58,6 +58,8 @@ namespace UxWeb.Controllers
         public ActionResult AddUserToDB(LoginModel model)
         {
             //Update user table with values from model
+            DALayer.AddNewUser(model.Username, model.Age, model.Email, model.Gender, model.ImageUrl, model.Name);
+            DALayer.UpsertTokenValue(model.Token, model.Email);
             return RedirectToAction("Index", "Home");
         }
     }
