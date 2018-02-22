@@ -45,14 +45,14 @@ function SetMyPosition(position) {
 }
 
 function FindNearbyPeople(users) {
-
+    debugger;
 
     var destinations = [], origins = [];
     var origin = new google.maps.LatLng(myLat, myLong);
     usersOnline = users;
     origins[0] = origin;
     for (var i = 0; i < users.length; i++) {
-        destinations[i] = new google.maps.LatLng(users[i].latitude, users[i].longitude);
+        destinations[i] = new google.maps.LatLng(users[i].Latitude, users[i].Longitude);
     }
 
     if (origins.length > 0 && destinations.length > 0) {
@@ -72,29 +72,24 @@ function FindNearbyPeople(users) {
 }
 
 function callback(response, status) {
+    debugger;
     $("#yourAddress").html("Your Address:" + response.originAddresses[0]);
     if (response.rows.length > 0) {
         var meInList = false;
         $("#nearbyPeoplesList").html("");
         var distances = response.rows[0].elements;
-        var uname = $("#uname")[0].value;
         var distance = $("#distanceFilter")[0].value;
         var gender = $("#genderFilter")[0].value;
+
         for (var i = 0; i < distances.length; i++) {
-            if (usersOnline[i].uname == uname) {
-                meInList = true;
-                continue;
-            }
             if (distances[i].distance && distances[i].distance.value / 1000 <= distance && (gender == "Both" || gender == usersOnline[i].gender)) {
-                var btstrpCls = GetBootstrapClass(usersOnline[i].gender);
-                var div = $('<div class="panel panel-' + btstrpCls + ' cursorPointer tile" lat="' + usersOnline[i].latitude + '" lon="' + usersOnline[i].longitude + '" label="' + usersOnline[i].uname + '"address="' + response.destinationAddresses[i] + '""></div>');
-                div.html('<div class="panel-heading">' + usersOnline[i].uname + '<span class="pull-right glyphicon ' + (usersOnline[i].gender == "Male" ? "glyphicon-star" : "glyphicon-heart") + '"></span></div><div class="panel-body">Age:' + usersOnline[i].age + '<br>Distance:' + distances[i].distance.text + '<br> Time to reach:' + distances[i].duration.text + '</div>');
+                var btstrpCls = GetBootstrapClass(usersOnline[i].Gender);
+                var div = $('<div class="panel panel-' + btstrpCls + ' cursorPointer tile" lat="' + usersOnline[i].Latitude + '" lon="' + usersOnline[i].Longitude + '" label="' + usersOnline[i].Name + '"address="' + response.destinationAddresses[i] + '""></div>');
+                div.html('<div class="panel-heading">' + usersOnline[i].Name + '<span class="pull-right glyphicon ' + (usersOnline[i].Gender == "Male" ? "glyphicon-star" : "glyphicon-heart") + '"></span></div><div class="panel-body">Age:' + usersOnline[i].Age + '<br>Distance:' + distances[i].distance.text + '<br> Time to reach:' + distances[i].duration.text + '</div>');
                 $("#nearbyPeoplesList").append(div);
             }
         }
-        if (distances.length == 1 && meInList) {
-            alert('Sorry, No one is nearby!');
-        }
+
     }
     $('#mask').hide();
 }
@@ -126,15 +121,15 @@ function showError(error) {
 }
 
 $(function () {
-   // debugger;
+    // debugger;
     gapi.load('auth2', function () {
-      //  debugger;
+        //  debugger;
         gapi.auth2.init();
     });
     var mask = $('#mask');
     $("#findPeopleBtn,#findPeopleBtnFilter").on("click", function () {
-            mask.show();
-            GetOtherUsers(myLat, myLong);   
+        mask.show();
+        GetOtherUsers(myLat, myLong);
     });
 
     $("#uname,#age").on("keyup", function (e) {

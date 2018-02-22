@@ -26,15 +26,15 @@ namespace CoupleEntry.Controllers
         {
             string emailId = GetProperty(SessionVariableNames.Email_Id) as string;
             //upsert to DB Position table, date time you can pass from here or in SP itself
-            DALayer.UpsertUserPosition(emailId,latitude,longitude);
+            DALayer.UpsertUserPosition(emailId, latitude, longitude);
             return true;
         }
 
         public JsonResult GetOtherUsers()
         {
-            //fetch other users
-            //return Json(nearbyUsers, JsonRequestBehavior.AllowGet);
-            return null;
+            string emailId = GetProperty(SessionVariableNames.Email_Id) as string;
+            return Json(DALayer.GetAllUsers(emailId), JsonRequestBehavior.AllowGet);
+
         }
     }
 }
