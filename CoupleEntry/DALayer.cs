@@ -12,6 +12,8 @@ namespace CoupleEntry
     {
         private static string _connectionString = "Data Source=bgrsql01;;Initial Catalog=LocalTest;Integrated Security=False;user id=sa;password=Squeeze66";
 
+        public static object DataAccess { get; private set; }
+
         public static bool IsEmailPresentInDB(string emailId)
         {
             string procName = "IsEmailPresentInDB";
@@ -69,6 +71,66 @@ namespace CoupleEntry
                 command.ExecuteNonQuery();
                 connection.Close();
             }
+        }
+
+        public static List<User> GetAllUsers(string emailId)
+        {
+            List<User> allUsers = new List<User>();
+
+            string procName = "GetAllOtherUsers";
+            IDbCommand command = new SqlCommand(procName);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter() { ParameterName = "EmailId", SqlDbType = SqlDbType.NVarChar, Value = emailId });
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                command.Connection = connection;
+                connection.Open();
+
+
+                using (IDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
+                {
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            string name = GetStringFromReader("Name", reader);
+                            string emailid = GetStringFromReader("EmailId", reader);
+                            string imageurl = GetStringFromReader("ImageUrl", reader);
+                            int age = Convert.ToInt32(GetStringFromReader("Age", reader));
+                            string gender = GetStringFromReader("Gender", reader);
+                            string latitude = GetStringFromReader("Latitude", reader);
+                            string longitude = GetStringFromReader("Longitude", reader);
+                            DateTime lastseen = Convert.ToDateTime(GetStringFromReader("LastSeen", reader));
+
+                            allUsers.Add(new User() { Name = name, EmailId = emailid, ImageUrl = imageurl, Age= age, Gender = gender, Latitude = latitude, Longitude = longitude, LastSeen = lastseen });
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+
+            return allUsers;
+        }
+
+        public static string GetStringFromReader(string column, IDataReader reader)
+        {
+            string value = null;
+
+            int index = reader.GetOrdinal(column);
+
+            if (!reader.IsDBNull(index))
+            {
+                value = reader.GetValue(index)?.ToString()?.Trim();
+                if (string.IsNullOrEmpty(value))
+                {
+                    value = null;
+                }
+            }
+
+            return value;
         }
     }
 }

@@ -12,13 +12,13 @@ namespace CoupleEntry.Controllers
 
     public class HomeController : Controller
     {
-        public static HashSet<NearbyUser> nearbyUsers = new HashSet<NearbyUser>();
+        //public static HashSet<NearbyUser> nearbyUsers = new HashSet<NearbyUser>();
         [UxWebAuthorize]
         public ActionResult Index()
         {
             if (Request.Cookies["UserMail"] != null)
                 SetProperty(SessionVariableNames.Email_Id, Request.Cookies["UserMail"].Value);
-            nearbyUsers.RemoveWhere(r => (DateTime.Now - r.lastSeen).TotalMinutes > 5);
+            //nearbyUsers.RemoveWhere(r => (DateTime.Now - r.lastSeen).TotalMinutes > 5);
             return View();
         }
 
@@ -33,7 +33,8 @@ namespace CoupleEntry.Controllers
         public JsonResult GetOtherUsers()
         {
             //fetch other users
-            return Json(nearbyUsers, JsonRequestBehavior.AllowGet);
+            //return Json(nearbyUsers, JsonRequestBehavior.AllowGet);
+            return null;
         }
     }
 }
