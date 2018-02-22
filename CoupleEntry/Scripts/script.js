@@ -131,14 +131,10 @@ $(function () {
       //  debugger;
         gapi.auth2.init();
     });
-
+    var mask = $('#mask');
     $("#findPeopleBtn,#findPeopleBtnFilter").on("click", function () {
-        if ($("#uname")[0].value != "" && $("#age")[0].value != "") {
             mask.show();
-            GetOtherUsers(myLat, myLong);
-        }
-        else
-            alert("Please fill all the fields!");
+            GetOtherUsers(myLat, myLong);   
     });
 
     $("#uname,#age").on("keyup", function (e) {

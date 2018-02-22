@@ -26,7 +26,7 @@ namespace CoupleEntry.Controllers
         {
             string emailId = GetProperty(SessionVariableNames.Email_Id) as string;
             //upsert to DB Position table, date time you can pass from here or in SP itself
-           
+            DALayer.UpsertUserPosition(emailId,latitude,longitude);
             return true;
         }
 

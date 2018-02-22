@@ -63,9 +63,6 @@
     }
 
     function AddUser() {
-        var uname = $("#uname")[0].value;
-        var age = $("#age")[0].value;
-        var gender = $("#gender")[0].value;
         $.ajax({
             type: "GET",
             url: "@Url.Action("AddUserPositionToDB", "Home")",

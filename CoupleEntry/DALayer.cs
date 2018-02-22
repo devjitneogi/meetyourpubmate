@@ -49,6 +49,24 @@ namespace CoupleEntry
             }
 
         }
+        public static void UpsertUserPosition(string emailId, string latitude, string longitude)
+        {
+            string procName = "UpsertUserPosition";
+            IDbCommand command = new SqlCommand(procName);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter() { ParameterName = "EmailId", SqlDbType = SqlDbType.NVarChar, Value = emailId });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "Latitude", SqlDbType = SqlDbType.NVarChar, Value = latitude });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "Longitude", SqlDbType = SqlDbType.NVarChar, Value = longitude });
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                command.Connection = connection;
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+        }
 
         public static void AddNewUser(string userName, int age, string emailId, string gender, string imageUrl, string name)
         {
