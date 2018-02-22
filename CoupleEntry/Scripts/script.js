@@ -84,10 +84,10 @@ function callback(response, status) {
         var gender = $("#genderFilter")[0].value;
 
         for (var i = 0; i < distances.length; i++) {
-            if (distances[i].distance && distances[i].distance.value / 1000 <= distance && (gender == "Both" || gender == usersOnline[i].gender)) {
+            if (distances[i].distance && distances[i].distance.value / 1000 <= distance && (gender == "Both" || gender == usersOnline[i].Gender)) {
                 var btstrpCls = GetBootstrapClass(usersOnline[i].Gender);
                 var div = $('<div class="panel panel-' + btstrpCls + ' cursorPointer tile" lat="' + usersOnline[i].Latitude + '" lon="' + usersOnline[i].Longitude + '" label="' + usersOnline[i].Name + '"address="' + response.destinationAddresses[i] + '""></div>');
-                div.html('<div class="panel-heading">' + usersOnline[i].Name + '<span class="pull-right glyphicon ' + (usersOnline[i].Gender == "Male" ? "glyphicon-star" : "glyphicon-heart") + '"></span></div><div class="panel-body">Age:' + usersOnline[i].Age + '<br>Distance:' + distances[i].distance.text + '<br> Time to reach:' + distances[i].duration.text + '</div>');
+                div.html('<div class="panel-heading">' + usersOnline[i].Name +'</div><div class="panel-body"><span class="pull-right iconImageUrl" style="background:url(' + usersOnline[i].ImageUrl + ')"></span>Age:' + usersOnline[i].Age + '<br>Distance:' + distances[i].distance.text + '<br> Time to reach:' + distances[i].duration.text + '</div>');
                 $("#nearbyPeoplesList").append(div);
             }
         }

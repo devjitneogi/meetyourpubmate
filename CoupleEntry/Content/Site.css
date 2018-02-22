@@ -62,10 +62,17 @@ textarea {
     cursor: pointer;
 }
 
+.iconImageUrl {
+      width: 6em;
+   height: 6em;
+   border: none;
+   display:inline-block;
+}
+
 .tile {
     border-radius: 25px !important;
-    max-height:300px;
-    max-width:500px;
+    max-height:320px;
+    max-width:520px;
 }
     .tile:hover {
         box-shadow: 2px 1px 7px #428bca;
