@@ -7,7 +7,7 @@ function initMap() {
 
 }
 
-function getLocation() {
+function GetMyLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(SetMyPosition, showError);
     } else {
@@ -32,6 +32,8 @@ function ShowOnMap(lat, lon, label, address) {
     });
     if (label != "You")
         lastMarker = marker;
+
+    UpsertUserPosition();
 }
 
 function SetMyPosition(position) {
@@ -132,12 +134,6 @@ $(function () {
         GetOtherUsers(myLat, myLong);
     });
 
-    $("#uname,#age").on("keyup", function (e) {
-        var keypressed = e.which || e.keyCode;
-        if (keypressed === 13) {
-            $("#findPeopleBtn").click();
-        }
-    });
     $('#nearbyPeoplesList').on('click', '.tile', function () {
         var user = $(this);
         if (lastMarker)

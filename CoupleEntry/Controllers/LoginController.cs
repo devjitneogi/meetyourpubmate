@@ -23,18 +23,19 @@ namespace UxWeb.Controllers
 
             if (loginModel != null)
             {
-                SetCookies(loginModel);
                 SetProperty(SessionVariableNames.Login_Model, loginModel);
                 SetProperty(SessionVariableNames.Email_Id, loginModel.Email);
                 bool exists = DALayer.IsEmailPresentInDB(loginModel.Email);
                 if (exists)
                 {
                     DALayer.UpsertTokenValue(loginModel.Token, loginModel.Email);
+                    SetCookies(loginModel);
+
                     return Json(new { result = "Redirect", url = Url.Action("Index", "Home") }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    return Json(new { result = "Add", url = Url.Action("AddUser", "Login", JsonRequestBehavior.AllowGet) });
+                    return Json(new { result = "Add", url = Url.Action("AddUserInformation", "Login", JsonRequestBehavior.AllowGet) });
                 }
 
             }
@@ -52,6 +53,7 @@ namespace UxWeb.Controllers
         [HttpPost]
         public ActionResult AddUserToDB(LoginModel model)
         {
+            SetCookies(model);
             DALayer.AddNewUser(model.Username, model.Age, model.Email, model.Gender, model.ImageUrl, model.Name);
             DALayer.UpsertTokenValue(model.Token, model.Email);
             return RedirectToAction("Index", "Home");

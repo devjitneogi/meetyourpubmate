@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="col-sm-3">
             <div style="background-color:whitesmoke;padding:20px;">
-            
+
                 <button id="findPeopleBtn" class="btn btn-primary btn-lg">Find people near me! &raquo;</button>
 
             </div><br />
@@ -41,38 +41,37 @@
 @section Scripts {
     <script>
         $(function () {
-           // debugger;
+            // debugger;
             var mask = $('#mask');
             mask.hide();
-            getLocation();
+            GetMyLocation();
         });
-    function GetOtherUsers() {
+        function GetOtherUsers() {
 
-        $.ajax({
-            type: "GET",
-            url: "@Url.Action("GetOtherUsers", "Home")",
-            cache: false,
-            complete: function (data) {
-                AddUser();
-                if (data.responseJSON) {
-                    FindNearbyPeople(data.responseJSON);
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetOtherUsers", "Home")",
+                cache: false,
+                complete: function (data) {
+                    if (data.responseJSON) {
+                        FindNearbyPeople(data.responseJSON);
+                    }
                 }
-            }
-        });
+            });
 
-    }
+        }
 
-    function AddUser() {
-        $.ajax({
-            type: "GET",
-            url: "@Url.Action("AddUserPositionToDB", "Home")",
-            data: {latitude: myLat, longitude: myLong },
-            cache: false,
-            complete: function (data) {
-            }
-        });
+        function UpsertUserPosition() {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("AddUserPositionToDB", "Home")",
+                data: { latitude: myLat, longitude: myLong },
+                cache: false,
+                complete: function (data) {
+                }
+            });
 
-    }
-        
+        }
+
     </script>
 }

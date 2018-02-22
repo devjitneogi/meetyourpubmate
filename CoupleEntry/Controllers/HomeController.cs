@@ -1,9 +1,4 @@
 ﻿using CoupleEntry.AuthenticationProvider;
-using CoupleEntry.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using static CoupleEntry.SessionService;
 
@@ -25,7 +20,6 @@ namespace CoupleEntry.Controllers
         public bool AddUserPositionToDB(string latitude, string longitude)
         {
             string emailId = GetProperty(SessionVariableNames.Email_Id) as string;
-            //upsert to DB Position table, date time you can pass from here or in SP itself
             DALayer.UpsertUserPosition(emailId, latitude, longitude);
             return true;
         }
