@@ -65,8 +65,7 @@ textarea {
 .iconImageUrl {
       width: 6em;
    height: 6em;
-   border: none;
-   display:inline-block;
+   zoom:59%;
 }
 
 .tile {

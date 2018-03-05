@@ -11,22 +11,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
-      <publishTime>02/13/2018 10:35:56</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
-      <publishTime>02/13/2018 10:35:56</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>02/15/2018 18:47:47</publishTime>
+      <publishTime>02/22/2018 18:35:09</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>02/15/2018 18:47:47</publishTime>
+      <publishTime>02/22/2018 18:35:09</publishTime>
+    </File>
+    <File Include="bin/CoupleEntry.AuthenticationProvider.dll">
+      <publishTime>02/22/2018 18:34:57</publishTime>
     </File>
     <File Include="bin/CoupleEntry.dll">
-      <publishTime>02/15/2018 18:47:36</publishTime>
+      <publishTime>02/22/2018 18:34:59</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>03/02/2015 09:32:26</publishTime>
@@ -68,7 +71,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/15/2015 02:06:24</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.dll">
-      <publishTime>02/13/2015 13:16:30</publishTime>
+      <publishTime>02/13/2018 16:28:04</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Host.SystemWeb.dll">
       <publishTime>02/13/2015 13:16:34</publishTime>
@@ -95,13 +98,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/13/2015 13:16:42</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
-      <publishTime>04/23/2012 15:23:58</publishTime>
+      <publishTime>07/25/2012 11:48:56</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>08/03/2014 20:33:56</publishTime>
     </File>
     <File Include="bin/Owin.dll">
-      <publishTime>11/27/2012 13:00:52</publishTime>
+      <publishTime>11/13/2012 12:19:34</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>06/18/2015 20:19:46</publishTime>
@@ -161,79 +164,88 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/28/2015 04:04:30</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
-      <publishTime>09/10/2013 17:28:38</publishTime>
+      <publishTime>07/17/2013 17:03:52</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
-      <publishTime>02/13/2018 10:35:45</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css">
-      <publishTime>02/13/2018 10:35:45</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>02/15/2018 14:57:16</publishTime>
+      <publishTime>02/22/2018 17:30:15</publishTime>
     </File>
     <File Include="favicon.ico">
-      <publishTime>02/13/2018 10:35:43</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.eot">
-      <publishTime>02/13/2018 10:35:45</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.svg">
-      <publishTime>02/13/2018 10:35:45</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.ttf">
-      <publishTime>02/13/2018 10:35:45</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="fonts/glyphicons-halflings-regular.woff">
-      <publishTime>02/13/2018 10:35:45</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>02/13/2018 10:35:57</publishTime>
+      <publishTime>02/19/2018 18:36:12</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>02/15/2018 18:47:42</publishTime>
+      <publishTime>02/22/2018 18:35:06</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
-      <publishTime>02/13/2018 10:35:45</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
-      <publishTime>02/13/2018 10:35:45</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.js">
-      <publishTime>02/13/2018 10:35:45</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.min.js">
-      <publishTime>02/13/2018 10:35:45</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.min.map">
-      <publishTime>02/13/2018 10:35:45</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.js">
-      <publishTime>02/13/2018 10:35:48</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.min.js">
-      <publishTime>02/13/2018 10:35:48</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.unobtrusive.js">
-      <publishTime>02/13/2018 10:35:48</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.unobtrusive.min.js">
-      <publishTime>02/13/2018 10:35:48</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="Scripts/script.js">
-      <publishTime>02/15/2018 16:29:48</publishTime>
+      <publishTime>02/22/2018 17:55:23</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>02/13/2018 10:47:56</publishTime>
+      <publishTime>02/19/2018 12:57:34</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>02/15/2018 16:19:33</publishTime>
+      <publishTime>02/22/2018 17:55:00</publishTime>
+    </File>
+    <File Include="Views/Login/AddUserInformation.cshtml">
+      <publishTime>02/21/2018 17:54:41</publishTime>
+    </File>
+    <File Include="Views/Login/Login.cshtml">
+      <publishTime>02/22/2018 17:52:08</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>02/13/2018 10:35:48</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>02/15/2018 15:22:03</publishTime>
+      <publishTime>02/22/2018 16:46:34</publishTime>
+    </File>
+    <File Include="Views/Shared/_LoginPartial.cshtml">
+      <publishTime>02/22/2018 17:38:11</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>02/13/2018 10:35:43</publishTime>
@@ -242,7 +254,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/13/2018 10:35:43</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>02/15/2018 18:47:42</publishTime>
+      <publishTime>02/22/2018 18:35:06</publishTime>
     </File>
   </ItemGroup>
 </Project>

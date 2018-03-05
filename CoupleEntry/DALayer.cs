@@ -10,7 +10,8 @@ namespace CoupleEntry
 {
     public class DALayer
     {
-        private static string _connectionString = "Data Source=bgrsql01;;Initial Catalog=LocalTest;Integrated Security=False;user id=sa;password=Squeeze66";
+       // private static string _connectionString = "Data Source=bgrsql01;;Initial Catalog=LocalTest;Integrated Security=False;user id=sa;password=Squeeze66";
+        private static string _connectionString = "Data Source=184.168.194.53;Initial Catalog=LocalTest;Integrated Security=False;user id=parassaxena3;password=P@ssw0rd1=2-";
 
         public static object DataAccess { get; private set; }
 
@@ -121,7 +122,7 @@ namespace CoupleEntry
                             string longitude = GetStringFromReader("Longitude", reader);
                             DateTime lastseen = Convert.ToDateTime(GetStringFromReader("LastSeen", reader));
 
-                            allUsers.Add(new User() { Name = name, EmailId = emailid, ImageUrl = imageurl, Age= age, Gender = gender, Latitude = latitude, Longitude = longitude, LastSeen = lastseen });
+                            allUsers.Add(new User() { Name = name, EmailId = emailid, ImageUrl = imageurl, Age = age, Gender = gender, Latitude = latitude, Longitude = longitude, LastSeen = lastseen });
                         }
                     }
                 }
@@ -131,6 +132,46 @@ namespace CoupleEntry
 
 
             return allUsers;
+        }
+
+        public static User GetUserInfo(string emailId)
+        {
+            User currentUser = new User();
+
+            string procName = "GetUserInfo";
+            IDbCommand command = new SqlCommand(procName);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter() { ParameterName = "EmailId", SqlDbType = SqlDbType.NVarChar, Value = emailId });
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                command.Connection = connection;
+                connection.Open();
+
+                using (IDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
+                {
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            currentUser.Name = GetStringFromReader("Name", reader);
+                            currentUser.EmailId = GetStringFromReader("EmailId", reader);
+                            currentUser.ImageUrl = GetStringFromReader("ImageUrl", reader);
+                            currentUser.Age = Convert.ToInt32(GetStringFromReader("Age", reader));
+                            currentUser.Gender = GetStringFromReader("Gender", reader);
+                            currentUser.Latitude = GetStringFromReader("Latitude", reader);
+                            currentUser.Longitude = GetStringFromReader("Longitude", reader);
+                            currentUser.LastSeen = Convert.ToDateTime(GetStringFromReader("LastSeen", reader));
+
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+
+            return currentUser;
         }
 
         public static string GetStringFromReader(string column, IDataReader reader)

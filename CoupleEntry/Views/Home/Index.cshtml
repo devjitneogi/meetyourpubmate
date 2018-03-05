@@ -5,12 +5,7 @@
 @section Integration{
     <div class="container-fluid">
         <div class="col-sm-3">
-            <div style="background-color:whitesmoke;padding:20px;">
-
-                <button id="findPeopleBtn" class="btn btn-primary btn-lg">Find people near me! &raquo;</button>
-
-            </div><br />
-            <div style="background-color:whitesmoke;padding:20px;">
+              <div style="background-color:whitesmoke;padding:20px;">
                 <h2>Filter by:</h2>
                 <label for="distanceFilter">Max distance(in kms):</label><br />
                 <input type="number" min="0" max="100" id="distanceFilter" value="5" class="input-sm" /><br />
@@ -20,7 +15,7 @@
                     <option>Female</option>
                     <option selected>Both</option>
                 </select><br />
-                <button id="findPeopleBtnFilter" class="btn btn-primary btn-lg">Filter! &raquo;</button>
+                <button id="findPeopleBtn" class="btn btn-warning btn-lg">Find people near me!&raquo;</button>
             </div>
         </div>
         <div class="jumbotron col-sm-7">
@@ -46,6 +41,7 @@
             mask.hide();
             GetMyLocation();
         });
+      
         function GetOtherUsers() {
 
             $.ajax({

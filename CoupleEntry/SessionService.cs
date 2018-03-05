@@ -13,6 +13,7 @@ namespace CoupleEntry
         {
             public static string Login_Model { get { return "loginModel"; } }
             public static string Email_Id { get { return "emailId"; } }
+            public static string Current_User { get { return "currentUser"; } }
 
         }
       

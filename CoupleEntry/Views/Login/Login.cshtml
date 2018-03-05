@@ -10,10 +10,10 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-              $("#mask").hide();
+            $("#mask").hide();
         });
-       
-       
+
+
 
         function onSignIn(googleUser) {
             debugger;
@@ -41,18 +41,17 @@
                 },
                 success: function (response) {
                     debugger;
-                   
+
                     if (response.result == 'Error') {
                         //show error
                     }
                     else if (response.result == 'Redirect') {
                         window.location = response.url;
                     }
-                    else if (response.result == "Add")
-                    {
-                         window.location.href = response.url;
+                    else if (response.result == "Add") {
+                        window.location.href = response.url;
                     }
-                    
+
                 },
 
             });
@@ -62,7 +61,9 @@
 }
 
 @section Login {
-    <h2>Login</h2>
-    <div class="g-signin2" data-onSuccess="onSignIn"></div>
-    <a id="signOut" href="#" onclick="signOut();">Sign out</a>
+    <div>
+        <h2>Login</h2>
+        <div class="g-signin2" data-onSuccess="onSignIn"></div>
+    </div>
+    @* <a id="signOut" href="#" onclick="signOut();">Sign out</a>*@
 }

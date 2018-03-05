@@ -7,13 +7,18 @@ namespace CoupleEntry.Controllers
 
     public class HomeController : Controller
     {
-        //public static HashSet<NearbyUser> nearbyUsers = new HashSet<NearbyUser>();
         [UxWebAuthorize]
         public ActionResult Index()
         {
+            string emailId = "";
             if (Request.Cookies["UserMail"] != null)
-                SetProperty(SessionVariableNames.Email_Id, Request.Cookies["UserMail"].Value);
-            //nearbyUsers.RemoveWhere(r => (DateTime.Now - r.lastSeen).TotalMinutes > 5);
+            {
+                emailId = Request.Cookies["UserMail"].Value;
+                SetProperty(SessionVariableNames.Email_Id, emailId);
+            }
+            if (GetProperty(SessionVariableNames.Current_User) == null)
+                SetProperty(SessionVariableNames.Current_User, DALayer.GetUserInfo(emailId));
+
             return View();
         }
 

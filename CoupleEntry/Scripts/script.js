@@ -129,7 +129,7 @@ $(function () {
         gapi.auth2.init();
     });
     var mask = $('#mask');
-    $("#findPeopleBtn,#findPeopleBtnFilter").on("click", function () {
+    $("#findPeopleBtn").on("click", function () {
         mask.show();
         GetOtherUsers(myLat, myLong);
     });
