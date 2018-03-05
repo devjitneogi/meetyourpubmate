@@ -21,7 +21,6 @@ namespace CoupleEntry.AuthenticationProvider
         /// <returns></returns>
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-
             HttpCookieCollection cookies = httpContext.Request.Cookies;
             HttpCookie authCookie = cookies.Get("Authorization");
             HttpCookie userMailCookie = cookies.Get("UserMail");

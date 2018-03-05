@@ -10,8 +10,8 @@ namespace CoupleEntry
 {
     public class DALayer
     {
-       // private static string _connectionString = "Data Source=bgrsql01;;Initial Catalog=LocalTest;Integrated Security=False;user id=sa;password=Squeeze66";
-        private static string _connectionString = "Data Source=184.168.194.53;Initial Catalog=LocalTest;Integrated Security=False;user id=parassaxena3;password=P@ssw0rd1=2-";
+        private static string _connectionString = "Data Source=bgrsql01;;Initial Catalog=LocalTest;Integrated Security=False;user id=sa;password=Squeeze66";
+       // private static string _connectionString = "Data Source=184.168.194.53;Initial Catalog=LocalTest;Integrated Security=False;user id=parassaxena3;password=P@ssw0rd1=2-";
 
         public static object DataAccess { get; private set; }
 
@@ -71,25 +71,47 @@ namespace CoupleEntry
 
         }
 
-        public static void AddNewUser(string userName, int age, string emailId, string gender, string imageUrl, string name)
+        public static User AddNewUser(LoginModel model)
         {
+            User currentUser = new User();
             string procName = "AddNewUser";
             IDbCommand command = new SqlCommand(procName);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add(new SqlParameter() { ParameterName = "UserName", SqlDbType = SqlDbType.NVarChar, Value = userName });
-            command.Parameters.Add(new SqlParameter() { ParameterName = "Age", SqlDbType = SqlDbType.Int, Value = age });
-            command.Parameters.Add(new SqlParameter() { ParameterName = "Gender", SqlDbType = SqlDbType.NVarChar, Value = gender });
-            command.Parameters.Add(new SqlParameter() { ParameterName = "ImageUrl", SqlDbType = SqlDbType.NVarChar, Value = imageUrl });
-            command.Parameters.Add(new SqlParameter() { ParameterName = "Name", SqlDbType = SqlDbType.NVarChar, Value = name });
-            command.Parameters.Add(new SqlParameter() { ParameterName = "EmailId", SqlDbType = SqlDbType.NVarChar, Value = emailId });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "UserName", SqlDbType = SqlDbType.NVarChar, Value = model.Username });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "Age", SqlDbType = SqlDbType.Int, Value = model.Age });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "Gender", SqlDbType = SqlDbType.NVarChar, Value = model.Gender });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "ImageUrl", SqlDbType = SqlDbType.NVarChar, Value = model.ImageUrl });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "Name", SqlDbType = SqlDbType.NVarChar, Value = model.Name });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "EmailId", SqlDbType = SqlDbType.NVarChar, Value = model.Email });
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 command.Connection = connection;
                 connection.Open();
-                command.ExecuteNonQuery();
+
+                using (IDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
+                {
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            currentUser.Name = GetStringFromReader("Name", reader);
+                            currentUser.EmailId = GetStringFromReader("EmailId", reader);
+                            currentUser.ImageUrl = GetStringFromReader("ImageUrl", reader);
+                            currentUser.Age = Convert.ToInt32(GetStringFromReader("Age", reader));
+                            currentUser.Gender = GetStringFromReader("Gender", reader);
+                            currentUser.Latitude = GetStringFromReader("Latitude", reader);
+                            currentUser.Longitude = GetStringFromReader("Longitude", reader);
+                            currentUser.LastSeen = Convert.ToDateTime(GetStringFromReader("LastSeen", reader));
+                            currentUser.Username = GetStringFromReader("UserName", reader);
+
+                        }
+                    }
+                }
+
                 connection.Close();
             }
+            return currentUser;
         }
 
         public static List<User> GetAllUsers(string emailId)
@@ -162,6 +184,7 @@ namespace CoupleEntry
                             currentUser.Latitude = GetStringFromReader("Latitude", reader);
                             currentUser.Longitude = GetStringFromReader("Longitude", reader);
                             currentUser.LastSeen = Convert.ToDateTime(GetStringFromReader("LastSeen", reader));
+                            currentUser.Username = GetStringFromReader("UserName", reader);
 
                         }
                     }
@@ -173,7 +196,49 @@ namespace CoupleEntry
 
             return currentUser;
         }
+        public static User UpdateUserInfo(User model)
+        {
+            User currentUser = new User();
 
+            string procName = "UpdateUserInfo";
+            IDbCommand command = new SqlCommand(procName);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter() { ParameterName = "EmailId", SqlDbType = SqlDbType.NVarChar, Value = model.EmailId });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "Name", SqlDbType = SqlDbType.NVarChar, Value = model.Name });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "Age", SqlDbType = SqlDbType.Int, Value = model.Age });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "Gender", SqlDbType = SqlDbType.NVarChar, Value = model.Gender });
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                command.Connection = connection;
+                connection.Open();
+
+                using (IDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
+                {
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            currentUser.Name = GetStringFromReader("Name", reader);
+                            currentUser.EmailId = GetStringFromReader("EmailId", reader);
+                            currentUser.ImageUrl = GetStringFromReader("ImageUrl", reader);
+                            currentUser.Age = Convert.ToInt32(GetStringFromReader("Age", reader));
+                            currentUser.Gender = GetStringFromReader("Gender", reader);
+                            currentUser.Latitude = GetStringFromReader("Latitude", reader);
+                            currentUser.Longitude = GetStringFromReader("Longitude", reader);
+                            currentUser.LastSeen = Convert.ToDateTime(GetStringFromReader("LastSeen", reader));
+                            currentUser.Username = GetStringFromReader("UserName", reader);
+
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+
+            return currentUser;
+        }
         public static string GetStringFromReader(string column, IDataReader reader)
         {
             string value = null;

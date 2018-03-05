@@ -50,6 +50,10 @@
         {
             @RenderSection("AddUser", true);
         }
+        @if (IsSectionDefined("EditUser"))
+        {
+            @RenderSection("EditUser", true);
+        }
         @if (IsSectionDefined("Scripts"))
         {
             @RenderSection("Scripts", true);

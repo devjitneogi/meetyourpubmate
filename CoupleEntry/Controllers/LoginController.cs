@@ -34,7 +34,7 @@ namespace UxWeb.Controllers
                 }
                 else
                 {
-                    return Json(new { result = "Add", url = Url.Action("AddUserInformation", "Login", JsonRequestBehavior.AllowGet) });
+                    return Json(new { result = "Add", url = Url.Action("AddUserDetails", "Login", JsonRequestBehavior.AllowGet) });
                 }
 
             }
@@ -43,7 +43,7 @@ namespace UxWeb.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddUserInformation()
+        public ActionResult AddUserDetails()
         {
             LoginModel model = GetProperty(SessionVariableNames.Login_Model) as LoginModel;
             return View(model);
@@ -53,8 +53,9 @@ namespace UxWeb.Controllers
         public ActionResult AddUserToDB(LoginModel model)
         {
             SetCookies(model);
-            DALayer.AddNewUser(model.Username, model.Age, model.Email, model.Gender, model.ImageUrl, model.Name);
+            User userDetails = DALayer.AddNewUser(model);
             DALayer.UpsertTokenValue(model.Token, model.Email);
+            SetProperty(SessionVariableNames.Current_User, userDetails);
             return RedirectToAction("Index", "Home");
         }
 

@@ -31,14 +31,14 @@
                 }
             }
             <li>
-                @Html.ActionLink("Hello " + userName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink("Hello " + userName + "!", "EditUserDetails", "Home", routeValues: null, htmlAttributes: new { title = "Edit User Details" })
             </li>
 
             <li><a href="#" onclick="signOut();">Log off</a></li>
         </ul>
     </div>
 
- }
+                }
                 else
                 {
                     <ul class="nav navbar-nav navbar-right">
