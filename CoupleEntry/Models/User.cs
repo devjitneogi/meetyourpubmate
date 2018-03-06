@@ -16,5 +16,6 @@ namespace CoupleEntry.Models
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public DateTime LastSeen { get; set; }
+        public string LastSeenDiff { get; set; }
     }
 }

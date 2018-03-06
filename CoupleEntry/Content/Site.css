@@ -1,4 +1,4 @@
-﻿body {
+﻿﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -66,6 +66,17 @@ textarea {
       width: 6em;
    height: 6em;
    zoom:59%;
+}
+#nearbyPeopleListContainer{
+overflow-y: scroll;
+}
+
+#nearbyPeopleList{
+max-height: 700px;
+}
+
+#mainDiv {
+margin-top: 65px;
 }
 
 .tile {

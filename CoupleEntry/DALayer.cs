@@ -10,8 +10,8 @@ namespace CoupleEntry
 {
     public class DALayer
     {
-        private static string _connectionString = "Data Source=bgrsql01;;Initial Catalog=LocalTest;Integrated Security=False;user id=sa;password=Squeeze66";
-       // private static string _connectionString = "Data Source=184.168.194.53;Initial Catalog=LocalTest;Integrated Security=False;user id=parassaxena3;password=P@ssw0rd1=2-";
+       // private static string _connectionString = "Data Source=bgrsql01;;Initial Catalog=LocalTest;Integrated Security=False;user id=sa;password=Squeeze66";
+        private static string _connectionString = "Data Source=184.168.194.53;Initial Catalog=LocalTest;Integrated Security=False;user id=parassaxena3;password=P@ssw0rd1=2-";
 
         public static object DataAccess { get; private set; }
 
@@ -142,9 +142,10 @@ namespace CoupleEntry
                             string gender = GetStringFromReader("Gender", reader);
                             string latitude = GetStringFromReader("Latitude", reader);
                             string longitude = GetStringFromReader("Longitude", reader);
+                            string username = GetStringFromReader("UserName", reader);
                             DateTime lastseen = Convert.ToDateTime(GetStringFromReader("LastSeen", reader));
 
-                            allUsers.Add(new User() { Name = name, EmailId = emailid, ImageUrl = imageurl, Age = age, Gender = gender, Latitude = latitude, Longitude = longitude, LastSeen = lastseen });
+                            allUsers.Add(new User() { Name = name, EmailId = emailid, ImageUrl = imageurl, Age = age, Gender = gender, Latitude = latitude, Longitude = longitude, LastSeen = lastseen,Username=username });
                         }
                     }
                 }

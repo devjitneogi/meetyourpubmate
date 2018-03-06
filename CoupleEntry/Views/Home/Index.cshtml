@@ -1,14 +1,14 @@
-﻿@{
+﻿﻿@{
     ViewBag.Title = "Welcome";
 }
 
 @section Integration{
     <div class="container-fluid">
         <div class="col-sm-3">
-              <div style="background-color:whitesmoke;padding:20px;">
+            <div style="background-color:whitesmoke;padding:20px;">
                 <h2>Filter by:</h2>
                 <label for="distanceFilter">Max distance(in kms):</label><br />
-                <input type="number" min="0" max="100" id="distanceFilter" value="5" class="input-sm" /><br />
+                <input type="number" min="0" max="100" id="distanceFilter" value="50" class="input-sm" /><br />
                 <label for="genderFilter">Gender:</label>
                 <select class="form-control input-sm" id="genderFilter">
                     <option>Male</option>
@@ -25,9 +25,9 @@
             <div id="error-div"></div>
         </div>
 
-        <div class="container col-sm-2">
+        <div class="container col-sm-2" id="nearbyPeopleListContainer">
             @*<h3>Nearby People:</h3>*@
-            <div class="panel-group" id="nearbyPeoplesList">
+            <div class="panel-group" id="nearbyPeopleList">
             </div>
         </div>
     </div>
@@ -40,8 +40,11 @@
             var mask = $('#mask');
             mask.hide();
             GetMyLocation();
+            setInterval(function () {
+                GetMyLocation();
+            }, 60000);
         });
-      
+
         function GetOtherUsers() {
 
             $.ajax({
