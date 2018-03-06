@@ -5,6 +5,7 @@
     string mailId = null;
     string userName = null;
     string imageUrl = null;
+    List<string> likes = new List<string>();
     if (authCookie != null)
     {
         mailId = SessionService.GetProperty(SessionService.SessionVariableNames.Email_Id) as string;
@@ -15,6 +16,7 @@
     {
         imageUrl = currentUser.ImageUrl;
         userName = currentUser.Name;
+        likes = currentUser.Likes;
     }
 }
 @if (mailId != null)
@@ -47,6 +49,17 @@
                     </ul>
                 }
 <script>
+    var myLikes = [];
+    @{
+        if (likes != null)
+        {
+            foreach (var d in likes)
+            {
+        @:myLikes.push("@d");
+        }
+            }
+     }
+
     function signOut() {
         debugger;
         var auth2 = gapi.auth2.getAuthInstance();

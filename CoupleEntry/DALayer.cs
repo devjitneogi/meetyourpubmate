@@ -10,7 +10,7 @@ namespace CoupleEntry
 {
     public class DALayer
     {
-       // private static string _connectionString = "Data Source=bgrsql01;;Initial Catalog=LocalTest;Integrated Security=False;user id=sa;password=Squeeze66";
+        // private static string _connectionString = "Data Source=bgrsql01;;Initial Catalog=LocalTest;Integrated Security=False;user id=sa;password=Squeeze66";
         private static string _connectionString = "Data Source=184.168.194.53;Initial Catalog=LocalTest;Integrated Security=False;user id=parassaxena3;password=P@ssw0rd1=2-";
 
         public static object DataAccess { get; private set; }
@@ -135,6 +135,7 @@ namespace CoupleEntry
                     {
                         while (reader.Read())
                         {
+                            int userId = Convert.ToInt32(GetStringFromReader("UserId", reader));
                             string name = GetStringFromReader("Name", reader);
                             string emailid = GetStringFromReader("EmailId", reader);
                             string imageurl = GetStringFromReader("ImageUrl", reader);
@@ -145,7 +146,7 @@ namespace CoupleEntry
                             string username = GetStringFromReader("UserName", reader);
                             DateTime lastseen = Convert.ToDateTime(GetStringFromReader("LastSeen", reader));
 
-                            allUsers.Add(new User() { Name = name, EmailId = emailid, ImageUrl = imageurl, Age = age, Gender = gender, Latitude = latitude, Longitude = longitude, LastSeen = lastseen,Username=username });
+                            allUsers.Add(new User() { UserId = userId, Name = name, EmailId = emailid, ImageUrl = imageurl, Age = age, Gender = gender, Latitude = latitude, Longitude = longitude, LastSeen = lastseen, Username = username });
                         }
                     }
                 }
@@ -177,6 +178,7 @@ namespace CoupleEntry
                     {
                         while (reader.Read())
                         {
+                            currentUser.UserId = Convert.ToInt32(GetStringFromReader("UserId", reader));
                             currentUser.Name = GetStringFromReader("Name", reader);
                             currentUser.EmailId = GetStringFromReader("EmailId", reader);
                             currentUser.ImageUrl = GetStringFromReader("ImageUrl", reader);
@@ -186,6 +188,14 @@ namespace CoupleEntry
                             currentUser.Longitude = GetStringFromReader("Longitude", reader);
                             currentUser.LastSeen = Convert.ToDateTime(GetStringFromReader("LastSeen", reader));
                             currentUser.Username = GetStringFromReader("UserName", reader);
+                            currentUser.Likes = GetStringFromReader("Likes", reader)?.Split(',').ToList();
+                            currentUser.Matches = GetStringFromReader("Matches", reader)?.Split(',').ToList();
+                            if (currentUser.Likes == null)
+                                currentUser.Likes = new List<string>();
+                            if (currentUser.Matches == null)
+                                currentUser.Matches = new List<string>();
+                            currentUser.Likes.Remove("");
+                            currentUser.Matches.Remove("");
 
                         }
                     }
@@ -239,6 +249,30 @@ namespace CoupleEntry
 
 
             return currentUser;
+        }
+
+        public static bool AddOrRemoveLike(int userId, int targetId, bool liked)
+        {
+            string procName = "AddOrRemoveLike";
+            IDbCommand command = new SqlCommand(procName);
+            command.CommandType = CommandType.StoredProcedure;
+            SqlParameter returnParameter = new SqlParameter() { ParameterName = "match", SqlDbType = SqlDbType.Bit, Direction = ParameterDirection.Output };
+           // SqlParameter returnParameter2 = new SqlParameter() { ParameterName = "error", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Output };
+            command.Parameters.Add(new SqlParameter() { ParameterName = "userId", SqlDbType = SqlDbType.Int, Value = userId });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "targetId", SqlDbType = SqlDbType.Int, Value = targetId });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "liked", SqlDbType = SqlDbType.Bit, Value = liked });
+            command.Parameters.Add(returnParameter);
+          //  command.Parameters.Add(returnParameter2);
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                command.Connection = connection;
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            return Convert.ToBoolean(returnParameter.Value);
+            
         }
         public static string GetStringFromReader(string column, IDataReader reader)
         {

@@ -13,7 +13,7 @@ namespace CoupleEntry.Controllers
         [UxWebAuthorize]
         public ActionResult Index()
         {
-          
+
             string emailId = "";
             if (Request.Cookies["UserMail"] != null)
             {
@@ -25,10 +25,9 @@ namespace CoupleEntry.Controllers
                     return RedirectToAction("Login", "Login");
                 }
             }
-            if (GetProperty(SessionVariableNames.Current_User) == null)
-                SetProperty(SessionVariableNames.Current_User, DALayer.GetUserInfo(emailId));
 
-          
+            SetProperty(SessionVariableNames.Current_User, DALayer.GetUserInfo(emailId));
+
             return View();
         }
 
@@ -43,6 +42,10 @@ namespace CoupleEntry.Controllers
         public JsonResult GetOtherUsers()
         {
             string emailId = GetProperty(SessionVariableNames.Email_Id) as string;
+            if (emailId == null && Request.Cookies["UserMail"] != null)
+            {
+                emailId = Request.Cookies["UserMail"].Value;
+            }
             List<User> users = DALayer.GetAllUsers(emailId);
             users.ForEach(x => x.LastSeenDiff = (DateTime.UtcNow - x.LastSeen).TotalSeconds.ToString());
             return Json(users, JsonRequestBehavior.AllowGet);
@@ -64,6 +67,18 @@ namespace CoupleEntry.Controllers
             User updatedModel = DALayer.UpdateUserInfo(model);
             SetProperty(SessionVariableNames.Current_User, updatedModel);
             return RedirectToAction("Index");
+        }
+
+        [UxWebAuthorize]
+        public bool AddOrRemoveLike(int targetId, bool liked)
+        {
+            User model = GetProperty(SessionVariableNames.Current_User) as User;
+            if (model == null && Request.Cookies["UserMail"] != null)
+            {
+                string emailId = Request.Cookies["UserMail"].Value;
+                model = DALayer.GetUserInfo(emailId);
+            }
+            return DALayer.AddOrRemoveLike(model.UserId, targetId, liked);
         }
     }
 }

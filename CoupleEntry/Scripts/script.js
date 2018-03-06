@@ -22,12 +22,23 @@ function ShowOnMap(lat, lon, label, address) {
         map: map,
         label: label
     });
+    //var a = "New York City";
+    //var b = "United States of America (USA)";
+    //var c = "Our cheapest price";
+    //var d = "$";
+    //var e = "329";
+    //var f = "pp";
+    //var g = "View flights";
+    //var h = "* Price subject to availability";
+
+    //var infoContent = '<div class="container"> <div class="row">' + a + '</div><div class="row">' + b + '</div><hr><div class="row"><div class="col-sm-6"> <div class="row">' + c + '</div><div class="row">*' + d + e + f + '</div> </div> <div class="col-sm-6"><button type="button" class="btn btn-info">' + g + '</button></div></div><hr><div class="row">' + h + '</div></div>';
 
     map.setCenter(latLng)
     var infowindow = new google.maps.InfoWindow({
         content: address
     });
     marker.addListener('click', function () {
+        jQuery('.gm-style-iw').prev('div').remove();
         infowindow.open(map, marker);
     });
     if (label != "You")
@@ -95,8 +106,14 @@ function callback(response, status) {
             if (distances[i].distance && distances[i].distance.value / 1000 <= distance && (gender == "Both" || gender == usersOnline[i].Gender)) {
                 var lastSeen = CalculateLastSeen(parseInt(usersOnline[i].LastSeenDiff));
                 var btstrpCls = GetBootstrapClass(usersOnline[i].Gender);
-                var div = $('<div class="panel panel-' + btstrpCls + ' cursorPointer tile" lat="' + usersOnline[i].Latitude + '" lon="' + usersOnline[i].Longitude + '" label="' + usersOnline[i].Name + '"address="' + response.destinationAddresses[i] + '""></div>');
-                div.html('<div class="panel-heading">' + usersOnline[i].Name + '</div><div class="panel-body"><span class="pull-right iconImageUrl" style="background:url(' + usersOnline[i].ImageUrl + ')"></span>Age:' + usersOnline[i].Age + '<br>Distance:' + distances[i].distance.text + '<br> Time to reach:' + distances[i].duration.text + '<br> Last Seen:' + lastSeen + '</div>');
+                var likeClass;
+                if (myLikes.indexOf(usersOnline[i].UserId.toString()) > -1)
+                { likeClass = "glyphicon-heart" }
+                else
+                { likeClass = "glyphicon-heart-empty" }
+
+                var div = $('<div class="panel panel-' + btstrpCls + ' cursorPointer tile" userId="' + usersOnline[i].UserId + '" lat="' + usersOnline[i].Latitude + '" lon="' + usersOnline[i].Longitude + '" label="' + usersOnline[i].Name + '"address="' + response.destinationAddresses[i] + '""></div>');
+                div.html('<div class="panel-heading">' + usersOnline[i].Name + '<span class="pull-right glyphicon ' + likeClass + ' heartIcon"></span></div><div class="panel-body"><span class="pull-right iconImageUrl" style="background:url(' + usersOnline[i].ImageUrl + ')"></span>Age:' + usersOnline[i].Age + '<br>Distance:' + distances[i].distance.text + '<br> Time to reach:' + distances[i].duration.text + '<br> Last Seen:' + lastSeen + '</div>');
                 $("#nearbyPeopleList").append(div);
             }
         }
@@ -174,12 +191,20 @@ $(function () {
             lastMarker.setMap(null);
         ShowOnMap(user.attr("lat"), user.attr("lon"), user.attr("label"), user.attr("address"));
     });
-    $('#signOut').on('click', function signOut() {
+    $('#signOut').on('click', function() {
         //debugger;
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(function () {
             console.log('User signed out.');
         });
+    });
+
+    $('#nearbyPeopleList').on('click', ".heartIcon", function (event) {
+        debugger;
+        var targetId = $(event.target).parent().parent().attr("userid");
+        var element = $(event.target);
+        var liked=element.hasClass("glyphicon-heart-empty");
+        AddOrRemoveNewLike(targetId, liked, element);
     });
 
 });

@@ -55,7 +55,6 @@ textarea {
 #map {
     height: 400px;
     width: 100%;
-   
 }
 
 .cursorPointer {
@@ -63,27 +62,35 @@ textarea {
 }
 
 .iconImageUrl {
-      width: 6em;
-   height: 6em;
-   zoom:59%;
-}
-#nearbyPeopleListContainer{
-overflow-y: scroll;
+    width: 6em;
+    height: 6em;
+    zoom: 59%;
 }
 
-#nearbyPeopleList{
-max-height: 700px;
+#nearbyPeopleListContainer {
+    overflow-y: scroll;
+}
+
+#nearbyPeopleList {
+    max-height: 700px;
+}
+
+.heartIcon {
+    color: hotpink;
+    font-size: 15px;
 }
 
 #mainDiv {
-margin-top: 65px;
+    margin-top: 65px;
 }
+
 
 .tile {
     border-radius: 25px !important;
-    max-height:320px;
-    max-width:520px;
+    max-height: 320px;
+    max-width: 520px;
 }
+
     .tile:hover {
         box-shadow: 2px 1px 7px #428bca;
         -webkit-transform: translateX(-3px);

@@ -26,17 +26,18 @@
         </div>
 
         <div class="container col-sm-2" id="nearbyPeopleListContainer">
-            @*<h3>Nearby People:</h3>*@
             <div class="panel-group" id="nearbyPeopleList">
             </div>
         </div>
     </div>
+
+
 }
 
 @section Scripts {
     <script>
         $(function () {
-            // debugger;
+
             var mask = $('#mask');
             mask.hide();
             GetMyLocation();
@@ -67,6 +68,34 @@
                 data: { latitude: myLat, longitude: myLong },
                 cache: false,
                 complete: function (data) {
+                }
+            });
+
+        }
+
+        function AddOrRemoveNewLike(targetId, liked, element) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("AddOrRemoveLike", "Home")",
+                data: { targetId: targetId, liked: liked },
+                cache: false,
+                complete: function (data) {
+                    debugger;
+                    if (data.status == 200) {
+                        if (liked) {
+                            myLikes.push(targetId);
+                            if (data.responseText == "True")
+                                alert("YAY! Its a Match!");
+                        }
+                        else {
+                            var index = myLikes.indexOf(targetId);
+                            if (index > -1) {
+                                myLikes.splice(index, 1);
+                            }
+                        }
+                        element.toggleClass("glyphicon-heart glyphicon-heart-empty");
+                    }
+
                 }
             });
 
