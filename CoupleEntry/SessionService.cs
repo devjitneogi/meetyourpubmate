@@ -26,7 +26,6 @@ namespace CoupleEntry
 
         public static void SetProperty(string propertyName, object propertyValue)
         {
-            var obj = HttpContext.Current.Session[propertyName];
             HttpContext.Current.Session[propertyName] = propertyValue;
         }
     }
