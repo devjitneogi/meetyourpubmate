@@ -29,6 +29,7 @@ namespace UxWeb.Controllers
                 if (exists)
                 {
                     DALayer.UpsertTokenValue(loginModel.Token, loginModel.Email);
+                    DALayer.UpdateImageUrl(loginModel.Email,loginModel.ImageUrl);
                     SetCookies(loginModel);
                     return Json(new { result = "Redirect", url = Url.Action("Index", "Home") }, JsonRequestBehavior.AllowGet);
                 }

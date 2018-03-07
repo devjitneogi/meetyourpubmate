@@ -22,17 +22,7 @@ function ShowOnMap(lat, lon, label, address) {
         map: map,
         label: label
     });
-    //var a = "New York City";
-    //var b = "United States of America (USA)";
-    //var c = "Our cheapest price";
-    //var d = "$";
-    //var e = "329";
-    //var f = "pp";
-    //var g = "View flights";
-    //var h = "* Price subject to availability";
-
-    //var infoContent = '<div class="container"> <div class="row">' + a + '</div><div class="row">' + b + '</div><hr><div class="row"><div class="col-sm-6"> <div class="row">' + c + '</div><div class="row">*' + d + e + f + '</div> </div> <div class="col-sm-6"><button type="button" class="btn btn-info">' + g + '</button></div></div><hr><div class="row">' + h + '</div></div>';
-
+ 
     map.setCenter(latLng)
     var infowindow = new google.maps.InfoWindow({
         content: address

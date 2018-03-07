@@ -6,6 +6,7 @@
     string userName = null;
     string imageUrl = null;
     List<string> likes = new List<string>();
+    List<string> matches = new List<string>();
     if (authCookie != null)
     {
         mailId = SessionService.GetProperty(SessionService.SessionVariableNames.Email_Id) as string;
@@ -17,6 +18,7 @@
         imageUrl = currentUser.ImageUrl;
         userName = currentUser.Name;
         likes = currentUser.Likes;
+        matches = currentUser.Matches;
     }
 }
 @if (mailId != null)
@@ -45,19 +47,26 @@
                 {
                     <ul class="nav navbar-nav navbar-right">
                         <li><a onclick="ShowLoginModal()" >Login/SignUp</a></li>
-                       @* <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
                     </ul>
                 }
 <script>
     var myLikes = [];
+    var myMatches = [];
     @{
         if (likes != null)
         {
-            foreach (var d in likes)
+            foreach (var like in likes)
             {
-        @:myLikes.push("@d");
+                 @:myLikes.push("@like");
+                    }
         }
-            }
+         if (matches != null)
+        {
+            foreach (var match in matches)
+            {
+                 @:myMatches.push("@match");
+                }
+        }
      }
 
     function signOut() {
@@ -69,8 +78,7 @@
         });
     }
 
-    function ShowLoginModal()
-    {
+    function ShowLoginModal() {
         $("#myErrorModal").modal('show');
     }
 

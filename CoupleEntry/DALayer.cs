@@ -274,6 +274,24 @@ namespace CoupleEntry
             return Convert.ToBoolean(returnParameter.Value);
             
         }
+
+        public static void UpdateImageUrl(string emailId, string imageUrl)
+        {
+            string procName = "UpdateImageUrl";
+            IDbCommand command = new SqlCommand(procName);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter() { ParameterName = "ImageUrl", SqlDbType = SqlDbType.NVarChar, Value = imageUrl });
+            command.Parameters.Add(new SqlParameter() { ParameterName = "EmailId", SqlDbType = SqlDbType.NVarChar, Value = emailId });
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                command.Connection = connection;
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+        }
         public static string GetStringFromReader(string column, IDataReader reader)
         {
             string value = null;
