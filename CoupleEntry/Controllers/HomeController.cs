@@ -14,11 +14,9 @@ namespace CoupleEntry.Controllers
         public ActionResult Index()
         {
 
-            string emailId = "";
-            if (Request.Cookies["UserMail"] != null)
+            string emailId = GetEmailIdAndRefreshUserSession(true);
+            if (emailId != null)
             {
-                emailId = Request.Cookies["UserMail"].Value;
-                SetProperty(SessionVariableNames.Email_Id, emailId);
                 bool exists = DALayer.IsEmailPresentInDB(emailId);
                 if (!exists)
                 {
@@ -26,14 +24,12 @@ namespace CoupleEntry.Controllers
                 }
             }
 
-            SetProperty(SessionVariableNames.Current_User, DALayer.GetUserInfo(emailId));
-
             return View();
         }
 
         public bool AddUserPositionToDB(string latitude, string longitude)
         {
-            string emailId = GetProperty(SessionVariableNames.Email_Id) as string;
+            string emailId = GetEmailIdAndRefreshUserSession(false);
             DALayer.UpsertUserPosition(emailId, latitude, longitude);
             return true;
         }
@@ -41,11 +37,7 @@ namespace CoupleEntry.Controllers
         [UxWebAuthorize]
         public JsonResult GetOtherUsers()
         {
-            string emailId = GetProperty(SessionVariableNames.Email_Id) as string;
-            if (emailId == null && Request.Cookies["UserMail"] != null)
-            {
-                emailId = Request.Cookies["UserMail"].Value;
-            }
+            string emailId = GetEmailIdAndRefreshUserSession(false);
             List<User> users = DALayer.GetAllUsers(emailId);
             users.ForEach(x => x.LastSeenDiff = (DateTime.UtcNow - x.LastSeen).TotalSeconds.ToString());
             return Json(users, JsonRequestBehavior.AllowGet);
@@ -78,7 +70,38 @@ namespace CoupleEntry.Controllers
                 string emailId = Request.Cookies["UserMail"].Value;
                 model = DALayer.GetUserInfo(emailId);
             }
-            return DALayer.AddOrRemoveLike(model.UserId, targetId, liked);
+            bool matched = DALayer.AddOrRemoveLike(model.UserId, targetId, liked);
+            if (liked)
+                model.Likes.Add(targetId.ToString());
+            else
+                model.Likes.Remove(targetId.ToString());
+            if (matched)
+                model.Matches.Add(targetId.ToString());
+
+            //SetProperty(SessionVariableNames.Current_User, model);
+            return matched;
+        }
+
+        private string GetEmailIdAndRefreshUserSession(bool refreshUserSession)
+        {
+            string emailId = GetProperty(SessionVariableNames.Email_Id) as string;
+            if (emailId == null && Request.Cookies["UserMail"] != null)
+            {
+                emailId = Request.Cookies["UserMail"].Value;
+                SetProperty(SessionVariableNames.Email_Id, emailId);
+            }
+
+            if (refreshUserSession)
+            {
+                SetProperty(SessionVariableNames.Current_User, DALayer.GetUserInfo(emailId));
+            }
+            else
+            {
+                User userModel = GetProperty(SessionVariableNames.Current_User) as User;
+                if (userModel == null && emailId != null)
+                    SetProperty(SessionVariableNames.Current_User, DALayer.GetUserInfo(emailId));
+            }
+            return emailId;
         }
     }
 }

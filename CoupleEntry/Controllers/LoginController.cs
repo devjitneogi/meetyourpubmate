@@ -45,6 +45,9 @@ namespace UxWeb.Controllers
         [HttpGet]
         public ActionResult AddUserDetails()
         {
+            User userModel = GetProperty(SessionVariableNames.Current_User) as User;
+            if (userModel != null)
+                return RedirectToAction("Index","Home");
             LoginModel model = GetProperty(SessionVariableNames.Login_Model) as LoginModel;
             return View(model);
         }
