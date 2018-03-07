@@ -30,7 +30,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                @Html.Partial("~/Views/Login/_LoginPartial.cshtml")
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
 
         @if (IsSectionDefined("Login"))
         {
-            @Html.Partial("~/Views/Login/LoginModal.cshtml")
+            @Html.Partial("~/Views/Login/_LoginModal.cshtml")
             @RenderSection("Login");
         }
         @if (IsSectionDefined("Integration"))

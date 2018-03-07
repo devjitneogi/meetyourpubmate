@@ -244,9 +244,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Login\AddUserDetails.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Login\_LoginPartial.cshtml" />
     <Content Include="Views\Home\EditUserDetails.cshtml" />
-    <Content Include="Views\Login\LoginModal.cshtml" />
+    <Content Include="Views\Login\_LoginModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
