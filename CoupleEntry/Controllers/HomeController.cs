@@ -62,7 +62,7 @@ namespace CoupleEntry.Controllers
         }
 
         [UxWebAuthorize]
-        public bool AddOrRemoveLike(int targetId, bool liked)
+        public JsonResult AddOrRemoveLike(int targetId, bool liked)
         {
             User model = GetProperty(SessionVariableNames.Current_User) as User;
             if (model == null && Request.Cookies["UserMail"] != null)
@@ -78,8 +78,7 @@ namespace CoupleEntry.Controllers
             if (matched)
                 model.Matches.Add(targetId.ToString());
 
-            //SetProperty(SessionVariableNames.Current_User, model);
-            return matched;
+            return Json(matched, JsonRequestBehavior.AllowGet);
         }
 
         private string GetEmailIdAndRefreshUserSession(bool refreshUserSession)

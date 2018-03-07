@@ -190,7 +190,7 @@ $(function () {
     });
 
     $('#nearbyPeopleList').on('click', ".heartIcon", function (event) {
-        debugger;
+        //debugger;
         var targetId = $(event.target).parent().parent().attr("userid");
         var element = $(event.target);
         var liked=element.hasClass("glyphicon-heart-empty");

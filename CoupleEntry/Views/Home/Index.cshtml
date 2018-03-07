@@ -56,6 +56,9 @@
                     if (data.responseJSON) {
                         FindNearbyPeople(data.responseJSON);
                     }
+                    else {
+                        location.reload();
+                    }
                 }
             });
 
@@ -80,11 +83,13 @@
                 data: { targetId: targetId, liked: liked },
                 cache: false,
                 complete: function (data) {
-                    debugger;
-                    if (data.status == 200) {
+                     if (data.responseJSON === undefined) {
+                        location.reload();
+                    }
+                    else {
                         if (liked) {
                             myLikes.push(targetId);
-                            if (data.responseText == "True")
+                            if (data.responseJSON)
                                 alert("YAY! Its a Match!");
                         }
                         else {
@@ -95,7 +100,6 @@
                         }
                         element.toggleClass("glyphicon-heart glyphicon-heart-empty");
                     }
-
                 }
             });
 
