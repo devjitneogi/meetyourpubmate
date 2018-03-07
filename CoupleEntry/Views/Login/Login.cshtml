@@ -13,57 +13,12 @@
             $("#mask").hide();
         });
 
-
-
-        function onSignIn(googleUser) {
-            debugger;
-            var profile = googleUser.getBasicProfile();
-            var id = profile.getId(); // Do not send to your backend! Use an ID token instead.
-            var name = profile.getName();
-            var imageUrl = profile.getImageUrl();
-            var emailId = profile.getEmail(); // This is null if the 'email' scope is not present.
-            var id_token = googleUser.getAuthResponse().id_token;
-            var expiryTime = googleUser.getAuthResponse().expires_in;
-            debugger;
-            gapi.auth2.init();
-            gapi.load('auth2', function () {
-                debugger;
-                var auth2 = gapi.auth2.getAuthInstance();
-                auth2.signOut();
-                console.log('Logged out.');
-            });
-            var loginModel = { Name: name, Email: emailId, ImageUrl: imageUrl, Token: id_token, Expiry: expiryTime };
-            $.ajax({
-                url: '@Url.Action("Login", "Login")',
-                type: 'POST',
-                data: {
-                    loginModel: loginModel
-                },
-                success: function (response) {
-                    debugger;
-
-                    if (response.result == 'Error') {
-                        //show error
-                    }
-                    else if (response.result == 'Redirect') {
-                        window.location = response.url;
-                    }
-                    else if (response.result == "Add") {
-                        window.location.href = response.url;
-                    }
-
-                },
-
-            });
-        }
+      
 
     </script>
 }
 
 @section Login {
-    <div>
-        <h2>Login</h2>
-        <div class="g-signin2" data-onSuccess="onSignIn"></div>
-    </div>
-    @* <a id="signOut" href="#" onclick="signOut();">Sign out</a>*@
+
+
 }

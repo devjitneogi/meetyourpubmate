@@ -38,14 +38,16 @@
         <div class="loading"></div>
     </div>
     <div id="mainDiv" class="container-fluid body-content">
+
         @if (IsSectionDefined("Login"))
         {
+            @Html.Partial("~/Views/Login/LoginModal.cshtml")
             @RenderSection("Login");
         }
         @if (IsSectionDefined("Integration"))
         {
             @RenderSection("Integration");
-        }  
+        }
         @if (IsSectionDefined("AddUser"))
         {
             @RenderSection("AddUser", true);
@@ -62,7 +64,7 @@
 
 
     @Scripts.Render("~/bundles/bootstrap")
-  @*  @RenderSection("scripts", required: false)*@
+    @*  @RenderSection("scripts", required: false)*@
 
 </body>
 </html>
